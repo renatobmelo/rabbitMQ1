@@ -27,7 +27,7 @@ public class NewTask {
             channel.basicPublish ("", TASK_QUEUE_NAME,
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
                     mensagem.getBytes("UTF-8"));
-            System.out.println ("[x] Enviado '" + mensagem + "'");
+            System.out.println ("[x] Renato Melo '" + mensagem + "'");
         }
     }
 
