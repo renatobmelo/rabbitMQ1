@@ -13,18 +13,20 @@ public class Produtor {
         connectionFactory.setHost("localhost");
         connectionFactory.setPort(5672);
 
-        String NOME_FILA = "filaHelloWorld";
         try(
 
                 Connection connection = connectionFactory.newConnection();
 
-                Channel channel = connection.createChannel()) {
+                Channel channel = connection.createChannel()
+        )         {
+            String NOME_FILA = "filaHello";
+            String mensagem = "Hello!";
 
             channel.queueDeclare(NOME_FILA, false, false, false, null);
-            String mensagem = "Hello World!";
+            channel.basicPublish("", NOME_FILA, false, false, null, mensagem.getBytes());
 
-            channel.basicPublish("", NOME_FILA, null, mensagem.getBytes());
-            System.out.println("Renato enviou: " + mensagem);
+
+
         }
     }
 
