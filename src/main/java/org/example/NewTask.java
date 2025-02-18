@@ -18,15 +18,15 @@ public class NewTask {
 
         try (Connection connection = connectionFactory.newConnection ();
              Channel channel = connection.createChannel ()) {
-            channel.queueDeclare (TASK_QUEUE_NAME, true, false, false, null);
+            // não durável
+            channel.queueDeclare (TASK_QUEUE_NAME, false, false, false, null);
 
 
-            String mensagem = String.join("", argv);
+            // Enviar a mensagem com timestamp
+            String mensagem = "NUMERO_MENSAGEM-" + System.currentTimeMillis();
 
-
-            channel.basicPublish ("", TASK_QUEUE_NAME,
-                    MessageProperties.PERSISTENT_TEXT_PLAIN,
-                    mensagem.getBytes("UTF-8"));
+            // Enviar a mensagem sem persistência
+            channel.basicPublish("", TASK_QUEUE_NAME, null, mensagem.getBytes("UTF-8"));
             System.out.println ("[x] Renato Melo '" + mensagem + "'");
         }
     }
